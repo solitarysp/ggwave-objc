@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "ggwave",
-        "repositoryURL": "https://github.com/ggerganov/ggwave-spm",
+        "repositoryURL": "https://github.com/solitarysp/ggwave-spm",
         "state": {
           "branch": null,
-          "revision": "c3bf3489f51c320954b45d6d295c030aa636dadf",
+          "revision": "4b43de104e4aa15e8cb8d9412893b9ccaa9420ad",
           "version": "0.2.0"
         }
       }
