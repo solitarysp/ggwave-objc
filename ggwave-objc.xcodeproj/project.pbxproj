@@ -359,7 +359,7 @@
 			repositoryURL = "https://github.com/solitarysp/ggwave-spm";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.5;
+				minimumVersion = 1.1.6;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
