@@ -37,10 +37,11 @@ typedef struct
     AudioQueueBufferRef buffers[NUM_BUFFERS];
 } StateOut;
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
     StateInp stateInp;
     StateOut stateOut;
 }
-
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property(strong , nonatomic) NSArray *data;
 @end

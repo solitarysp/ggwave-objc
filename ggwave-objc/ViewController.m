@@ -54,7 +54,9 @@ void AudioOutputCallback(void * inUserData,
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.data = [[NSArray alloc]initWithObjects:@"AUDIBLE_NORMAL",@"AUDIBLE_FAST",@"AUDIBLE_FASTEST",@"ULTRASOUND_NORMAL",@"ULTRASOUND_FAST", @"ULTRASOUND_FASTEST", @"DT_NORMAL", @"DT_FAST"];
+    self.tableView.dataSource=self;
+    self.tableView.delegate=self;
     // initialize audio format
 
     [self setupAudioFormat:&stateInp.dataFormat];
@@ -91,6 +93,83 @@ void AudioOutputCallback(void * inUserData,
     stateInp.labelReceived = _labelReceived;
     stateOut.labelStatus = _labelStatusOut;
     _labelMessageToSend.text = [@"Message to send: " stringByAppendingString:[NSString stringWithFormat:@"%s", kDefaultMessageToSend]];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return [self.data count];
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    static NSString *simpleTableIdentifier = @"cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
+    
+    
+    if (cell == nil) {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+        
+    }
+    
+    
+    cell.textLabel.text = [self.data objectAtIndex:indexPath.row] ;
+    
+    //cell.textLabel.font = [UIFont systemFontOfSize:11.0];
+    
+
+    return cell;
+    
+    
+    
+}
+
+
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+    if(cell.textLabel.text == @"AUDIBLE_NORMAL"){
+        ggwave_changeConfigTxProtocol(40, 9, 3);
+    }
+    if(cell.textLabel.text == @"AUDIBLE_FAST"){
+        ggwave_changeConfigTxProtocol(40, 6, 3);
+    }
+    if(cell.textLabel.text == @"AUDIBLE_FASTEST"){
+        ggwave_changeConfigTxProtocol(40, 3, 3);
+    }
+    if(cell.textLabel.text == @"ULTRASOUND_NORMAL"){
+        ggwave_changeConfigTxProtocol(320, 9, 3);
+        printf("change config \n");
+    }
+    
+    if(cell.textLabel.text == @"ULTRASOUND_FAST"){
+        ggwave_changeConfigTxProtocol(320, 6, 3);
+        printf("change config \n");
+    }
+    
+    if(cell.textLabel.text == @"ULTRASOUND_FASTEST"){
+        ggwave_changeConfigTxProtocol(320, 3, 3);
+        printf("change config \n");
+    }
+    
+    if(cell.textLabel.text == @"DT_NORMAL"){
+        ggwave_changeConfigTxProtocol(24, 9, 1);
+        printf("change config \n");
+    }
+    
+    if(cell.textLabel.text == @"DT_FAST"){
+        ggwave_changeConfigTxProtocol(24, 6, 1);
+        printf("change config \n");
+    }
 }
 
 -(IBAction) stopCapturing
@@ -179,7 +258,6 @@ void AudioOutputCallback(void * inUserData,
         const char * payload = kDefaultMessageToSend;
         const int len = (int) strlen(payload);
 
-        ggwave_changeConfigTxProtocol(20, 6, 3);
          const int n = ggwave_encode(stateOut.ggwaveId, payload, len, GGWAVE_TX_PROTOCOL_CUSTOM_0, 10, NULL, 1);
 
          stateOut.waveform = [NSMutableData dataWithLength:sizeof(char)*n];
