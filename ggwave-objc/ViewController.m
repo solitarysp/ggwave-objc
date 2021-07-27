@@ -13,7 +13,7 @@
 
 // the text message to transmit:
 const char* kDefaultMessageToSend = "Hello iOS!";
-
+NSString* selectProtocol = @"AUDIBLE_NORMAL";
 // callback used to process captured audio
 void AudioInputCallback(void * inUserData,
                         AudioQueueRef inAQ,
@@ -136,42 +136,44 @@ void AudioOutputCallback(void * inUserData,
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-
-    if(cell.textLabel.text == @"AUDIBLE_NORMAL"){
+    selectProtocol = cell.textLabel.text;
+  
+}
+- (void) updateConfig:(NSString*)selectProtocol {
+    if(selectProtocol == @"AUDIBLE_NORMAL"){
         ggwave_changeConfigTxProtocol(40, 9, 3);
     }
-    if(cell.textLabel.text == @"AUDIBLE_FAST"){
+    if(selectProtocol== @"AUDIBLE_FAST"){
         ggwave_changeConfigTxProtocol(40, 6, 3);
     }
-    if(cell.textLabel.text == @"AUDIBLE_FASTEST"){
+    if(selectProtocol == @"AUDIBLE_FASTEST"){
         ggwave_changeConfigTxProtocol(40, 3, 3);
     }
-    if(cell.textLabel.text == @"ULTRASOUND_NORMAL"){
+    if(selectProtocol == @"ULTRASOUND_NORMAL"){
         ggwave_changeConfigTxProtocol(320, 9, 3);
         printf("change config \n");
     }
     
-    if(cell.textLabel.text == @"ULTRASOUND_FAST"){
+    if(selectProtocol == @"ULTRASOUND_FAST"){
         ggwave_changeConfigTxProtocol(320, 6, 3);
         printf("change config \n");
     }
     
-    if(cell.textLabel.text == @"ULTRASOUND_FASTEST"){
+    if(selectProtocol == @"ULTRASOUND_FASTEST"){
         ggwave_changeConfigTxProtocol(320, 3, 3);
         printf("change config \n");
     }
     
-    if(cell.textLabel.text == @"DT_NORMAL"){
+    if(selectProtocol == @"DT_NORMAL"){
         ggwave_changeConfigTxProtocol(24, 9, 1);
         printf("change config \n");
     }
     
-    if(cell.textLabel.text == @"DT_FAST"){
+    if(selectProtocol == @"DT_FAST"){
         ggwave_changeConfigTxProtocol(24, 6, 1);
         printf("change config \n");
     }
 }
-
 -(IBAction) stopCapturing
 {
     printf("Stop capturing\n");
@@ -252,9 +254,10 @@ void AudioOutputCallback(void * inUserData,
 
         return;
     }
-
+    [self updateConfig:(selectProtocol)];
     // prepare audio message using GGWave
     {
+        kDefaultMessageToSend=self.textFieldData.text.UTF8String;
         const char * payload = kDefaultMessageToSend;
         const int len = (int) strlen(payload);
 
@@ -274,7 +277,7 @@ void AudioOutputCallback(void * inUserData,
     }
 
     // initiate playback
-
+    _labelMessageToSend.text = [@"Message to send: " stringByAppendingString:[NSString stringWithFormat:@"%s", kDefaultMessageToSend]];
     printf("Send message\n");
 
     OSStatus status = AudioQueueNewOutput(&stateOut.dataFormat,

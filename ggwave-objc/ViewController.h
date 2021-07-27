@@ -44,4 +44,5 @@ typedef struct
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(strong , nonatomic) NSArray *data;
+@property (nonatomic, retain) IBOutlet UITextField *textFieldData;
 @end

@@ -80,6 +80,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Viettel Digital" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xoN-k7-Azh">
+                                <rect key="frame" x="29" y="59" width="298" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -112,6 +118,7 @@
                         <outlet property="labelStatusInp" destination="aGv-CU-kQ0" id="7AS-3p-bVr"/>
                         <outlet property="labelStatusOut" destination="Q0m-qh-rgI" id="bcW-vv-uG1"/>
                         <outlet property="tableView" destination="1BF-RQ-rQu" id="hXn-Oa-yxv"/>
+                        <outlet property="textFieldData" destination="xoN-k7-Azh" id="BRY-ks-C4v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
