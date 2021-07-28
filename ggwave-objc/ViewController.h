@@ -17,7 +17,9 @@ typedef struct
     int ggwaveId;
     bool isCapturing;
     UILabel * labelReceived;
-
+    UILabel * labelLengthReceived;
+    UILabel * labelLength;
+    UITextField * textRandomLength;
     AudioQueueRef queue;
     AudioStreamBasicDescription dataFormat;
     AudioQueueBufferRef buffers[NUM_BUFFERS];

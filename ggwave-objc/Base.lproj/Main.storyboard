@@ -66,7 +66,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1BF-RQ-rQu">
-                                <rect key="frame" x="39" y="403" width="240" height="128"/>
+                                <rect key="frame" x="39" y="471" width="240" height="106"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -81,11 +81,40 @@
                                 </prototypes>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Viettel Digital" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xoN-k7-Azh">
-                                <rect key="frame" x="29" y="59" width="298" height="34"/>
+                                <rect key="frame" x="39" y="412" width="202" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Leng" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJb-QZ-q8M">
+                                <rect key="frame" x="39" y="390" width="202" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yt8-R0-VcY">
+                                <rect key="frame" x="249" y="412" width="57" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <state key="normal" title="Random"/>
+                                <connections>
+                                    <action selector="randomMsgSend:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Iy-P4-xsV"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="raU-4l-fFg">
+                                <rect key="frame" x="203" y="377" width="62" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Length" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xw0-95-iXs">
+                                <rect key="frame" x="39" y="55" width="53" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -113,12 +142,15 @@
                     </view>
                     <connections>
                         <outlet property="buttonToggleCapture" destination="BI9-HV-ggo" id="GCc-q5-lij"/>
+                        <outlet property="labelLength" destination="DJb-QZ-q8M" id="X1D-YO-eXf"/>
+                        <outlet property="labelLengthReceived" destination="xw0-95-iXs" id="PWl-BO-Y8M"/>
                         <outlet property="labelMessageToSend" destination="0qp-ij-OPW" id="5T5-6e-HgZ"/>
                         <outlet property="labelReceived" destination="Sa3-2h-Fr3" id="ZPE-fd-FZH"/>
                         <outlet property="labelStatusInp" destination="aGv-CU-kQ0" id="7AS-3p-bVr"/>
                         <outlet property="labelStatusOut" destination="Q0m-qh-rgI" id="bcW-vv-uG1"/>
                         <outlet property="tableView" destination="1BF-RQ-rQu" id="hXn-Oa-yxv"/>
                         <outlet property="textFieldData" destination="xoN-k7-Azh" id="BRY-ks-C4v"/>
+                        <outlet property="textRandomLength" destination="raU-4l-fFg" id="kLk-eq-KrJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

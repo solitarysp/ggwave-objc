@@ -31,10 +31,12 @@ void AudioOutputCallback(void * inUserData,
 
 @property (weak, nonatomic) IBOutlet UILabel *labelStatusInp;
 @property (weak, nonatomic) IBOutlet UILabel *labelReceived;
+@property (weak, nonatomic) IBOutlet UILabel *labelLengthReceived;
 @property (weak, nonatomic) IBOutlet UILabel *labelStatusOut;
 @property (weak, nonatomic) IBOutlet UILabel *labelMessageToSend;
 @property (weak, nonatomic) IBOutlet UIButton *buttonToggleCapture;
-
+@property (weak, nonatomic) IBOutlet UILabel *labelLength;
+@property (nonatomic, retain) IBOutlet UITextField *textRandomLength;
 @end
 
 @implementation ViewController
@@ -91,8 +93,11 @@ void AudioOutputCallback(void * inUserData,
     // UI
 
     stateInp.labelReceived = _labelReceived;
+    stateInp.labelLength = _labelLength;
+    stateInp.labelLengthReceived =  _labelLengthReceived;
     stateOut.labelStatus = _labelStatusOut;
     _labelMessageToSend.text = [@"Message to send: " stringByAppendingString:[NSString stringWithFormat:@"%s", kDefaultMessageToSend]];
+    stateInp.labelLength.text  = @"0";
 }
 
 
@@ -246,7 +251,15 @@ void AudioOutputCallback(void * inUserData,
     AudioQueueDispose(stateOut.queue, true);
 }
 
-
+- (IBAction)randomMsgSend:(id)sender{
+    
+    NSInteger number = [self.textRandomLength.text integerValue];
+    NSMutableString* string = [NSMutableString stringWithCapacity:number];
+        for (int i = 0; i < number; i++) {
+            [string appendFormat:@"%C", (unichar)('a' + arc4random_uniform(30))];
+        }
+    [self.textFieldData setText: [@""stringByAppendingString:[NSString stringWithFormat:@"%s", string.UTF8String]]]	;
+}
 - (IBAction)togglePlayback:(id)sender {
     if (stateOut.isPlaying) {
         [self stopPlayback];
@@ -260,7 +273,7 @@ void AudioOutputCallback(void * inUserData,
         kDefaultMessageToSend=self.textFieldData.text.UTF8String;
         const char * payload = kDefaultMessageToSend;
         const int len = (int) strlen(payload);
-
+        stateInp.labelLength.text  = [@"Length Send : " stringByAppendingString:[NSString stringWithFormat:@"%d", len]];
          const int n = ggwave_encode(stateOut.ggwaveId, payload, len, GGWAVE_TX_PROTOCOL_CUSTOM_0, 10, NULL, 1);
 
          stateOut.waveform = [NSMutableData dataWithLength:sizeof(char)*n];
@@ -309,6 +322,10 @@ void AudioOutputCallback(void * inUserData,
 @end
 
 
+static unsigned long extracted(char *decoded) {
+    return strlen(decoded);
+}
+
 //
 // Callback implmentation
 //
@@ -335,6 +352,7 @@ void AudioInputCallback(void * inUserData,
     // check if a message has been received
     if (ret > 0) {
         stateInp->labelReceived.text = [@"Received: " stringByAppendingString:[NSString stringWithFormat:@"%s", decoded]];
+        stateInp->labelLengthReceived.text = [@"" stringByAppendingString:[NSString stringWithFormat:@"%d", strlen(decoded)]];
     }
 
     // put the buffer back in the queue
