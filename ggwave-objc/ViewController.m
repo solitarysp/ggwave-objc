@@ -352,7 +352,7 @@ void AudioInputCallback(void * inUserData,
     // check if a message has been received
     if (ret > 0) {
         stateInp->labelReceived.text = [@"Received: " stringByAppendingString:[NSString stringWithFormat:@"%s", decoded]];
-        stateInp->labelLengthReceived.text = [@"" stringByAppendingString:[NSString stringWithFormat:@"%d", strlen(decoded)]];
+        stateInp->labelLengthReceived.text = [@"Lenght Received " stringByAppendingString:[NSString stringWithFormat:@"%d", strlen(decoded)]];
     }
 
     // put the buffer back in the queue
