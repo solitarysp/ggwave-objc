@@ -20,6 +20,7 @@ typedef struct
     UILabel * labelLengthReceived;
     UILabel * labelLength;
     UITextField * textRandomLength;
+    UILabel *labelTimeReceive;
     AudioQueueRef queue;
     AudioStreamBasicDescription dataFormat;
     AudioQueueBufferRef buffers[NUM_BUFFERS];
@@ -33,7 +34,8 @@ typedef struct
     int totalBytes;
     NSMutableData * waveform;
     UILabel * labelStatus;
-
+    UILabel * labelTimeSend;
+    UILabel * labeleTotalTime;
     AudioQueueRef queue;
     AudioStreamBasicDescription dataFormat;
     AudioQueueBufferRef buffers[NUM_BUFFERS];

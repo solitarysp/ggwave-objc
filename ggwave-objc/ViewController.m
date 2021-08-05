@@ -14,6 +14,8 @@
 // the text message to transmit:
 const char* kDefaultMessageToSend = "Hello iOS!";
 NSString* selectProtocol = @"AUDIBLE_NORMAL";
+long long timerSend;
+long long timerReceive;
 // callback used to process captured audio
 void AudioInputCallback(void * inUserData,
                         AudioQueueRef inAQ,
@@ -37,6 +39,9 @@ void AudioOutputCallback(void * inUserData,
 @property (weak, nonatomic) IBOutlet UIButton *buttonToggleCapture;
 @property (weak, nonatomic) IBOutlet UILabel *labelLength;
 @property (nonatomic, retain) IBOutlet UITextField *textRandomLength;
+@property (weak, nonatomic) IBOutlet UILabel *labelTimeSend;
+@property (weak, nonatomic) IBOutlet UILabel *labelTimeReceive;
+@property (weak, nonatomic) IBOutlet UILabel *labelTotalTime;
 @end
 
 @implementation ViewController
@@ -56,7 +61,7 @@ void AudioOutputCallback(void * inUserData,
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.data = [[NSArray alloc]initWithObjects:@"AUDIBLE_NORMAL",@"AUDIBLE_FAST",@"AUDIBLE_FASTEST",@"ULTRASOUND_NORMAL",@"ULTRASOUND_FAST", @"ULTRASOUND_FASTEST", @"DT_NORMAL", @"DT_FAST"];
+    self.data = @[@"AUDIBLE_NORMAL",@"AUDIBLE_FAST",@"AUDIBLE_FASTEST",@"ULTRASOUND_NORMAL",@"ULTRASOUND_FAST", @"ULTRASOUND_FASTEST", @"DT_NORMAL", @"DT_FAST"];
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     // initialize audio format
@@ -98,6 +103,9 @@ void AudioOutputCallback(void * inUserData,
     stateOut.labelStatus = _labelStatusOut;
     _labelMessageToSend.text = [@"Message to send: " stringByAppendingString:[NSString stringWithFormat:@"%s", kDefaultMessageToSend]];
     stateInp.labelLength.text  = @"0";
+    stateOut.labelTimeSend = _labelTimeSend;
+    stateInp.labelTimeReceive = _labelTimeReceive;
+    stateOut.labeleTotalTime = _labelTotalTime;
 }
 
 
@@ -228,6 +236,7 @@ void AudioOutputCallback(void * inUserData,
         if (status == 0) {
             _labelStatusInp.text = @"Status: Capturing";
             [sender setTitle:@"Stop Capturing" forState:UIControlStateNormal];
+            printf("Start capture time %lld", timerReceive);
         }
     }
 
@@ -249,6 +258,7 @@ void AudioOutputCallback(void * inUserData,
     }
 
     AudioQueueDispose(stateOut.queue, true);
+    printf("time send");
 }
 
 - (IBAction)randomMsgSend:(id)sender{
@@ -291,6 +301,7 @@ void AudioOutputCallback(void * inUserData,
 
     // initiate playback
     _labelMessageToSend.text = [@"Message to send: " stringByAppendingString:[NSString stringWithFormat:@"%s", kDefaultMessageToSend]];
+    _labelTimeSend.text = @"Time send: ";
     printf("Send message\n");
 
     OSStatus status = AudioQueueNewOutput(&stateOut.dataFormat,
@@ -302,6 +313,7 @@ void AudioOutputCallback(void * inUserData,
                                           &stateOut.queue);
 
     if (status == 0) {
+        
         stateOut.isPlaying = true;
         for (int i = 0; i < NUM_BUFFERS && stateOut.isPlaying; i++) {
             AudioQueueAllocateBuffer(stateOut.queue, NUM_BYTES_PER_BUFFER, &stateOut.buffers[i]);
@@ -311,6 +323,8 @@ void AudioOutputCallback(void * inUserData,
         status = AudioQueueStart(stateOut.queue, NULL);
         if (status == 0) {
             _labelStatusOut.text = @"Status: Playing audio";
+            timerSend = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
+            _labelTimeSend.text = [@"Time send: "stringByAppendingString:([[NSString stringWithFormat:@"%lld", (long long)([[NSDate date] timeIntervalSince1970] * 1000.0)] substringFromIndex:7])];
         }
     }
 
@@ -352,7 +366,9 @@ void AudioInputCallback(void * inUserData,
     // check if a message has been received
     if (ret > 0) {
         stateInp->labelReceived.text = [@"Received: " stringByAppendingString:[NSString stringWithFormat:@"%s", decoded]];
-        stateInp->labelLengthReceived.text = [@"Lenght Received " stringByAppendingString:[NSString stringWithFormat:@"%d", strlen(decoded)]];
+        stateInp->labelLengthReceived.text = [@"Length Received " stringByAppendingString:[NSString stringWithFormat:@"%d", strlen(decoded)]];
+        stateInp->labelTimeReceive.text =[@"Time receive: "stringByAppendingString:([[NSString stringWithFormat:@"%lld", (long long)([[NSDate date] timeIntervalSince1970] * 1000.0)] substringFromIndex:7])];
+    
     }
 
     // put the buffer back in the queue
@@ -387,6 +403,8 @@ void AudioOutputCallback(void * inUserData,
     } else {
         // no audio left - stop playback
         if (stateOut->isPlaying) {
+            stateOut->labeleTotalTime.text = [@"Time to send: " stringByAppendingString:[NSString stringWithFormat:@"%lld ms", (long long)([[NSDate date] timeIntervalSince1970] * 1000.0)- timerSend]];
+            stateOut->labelTimeSend.text =[@"Time send: "stringByAppendingString:([[NSString stringWithFormat:@"%lld", (long long)([[NSDate date] timeIntervalSince1970] * 1000.0)] substringFromIndex:7])];
             printf("Stopping playback\n");
             AudioQueueStop(stateOut->queue, false);
             stateOut->isPlaying = false;

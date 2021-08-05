@@ -63,6 +63,7 @@
 		187DC34626340BE60049F4BF /* ggwave-objc */ = {
 			isa = PBXGroup;
 			children = (
+				A16342EA26BA760800574E1F /* include */,
 				187DC34726340BE60049F4BF /* AppDelegate.h */,
 				187DC34826340BE60049F4BF /* AppDelegate.m */,
 				187DC34A26340BE60049F4BF /* SceneDelegate.h */,
@@ -76,6 +77,14 @@
 				187DC35926340BE90049F4BF /* main.m */,
 			);
 			path = "ggwave-objc";
+			sourceTree = "<group>";
+		};
+		A16342EA26BA760800574E1F /* include */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = include;
+			path = "../../../../Library/Developer/Xcode/DerivedData/GGWaveLibStatic-aaeaqhbporhjjpbhdmeritacvosj/Build/Products/Debug-maccatalyst/include";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,13 +309,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = P8JZH34X63;
+				DEVELOPMENT_TEAM = 367UUB8355;
 				INFOPLIST_FILE = "ggwave-objc/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ggerganov.ggwave-objc";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ggwave-objc",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ggerganov.ggwave-objc.test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -318,13 +332,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = P8JZH34X63;
+				DEVELOPMENT_TEAM = 367UUB8355;
 				INFOPLIST_FILE = "ggwave-objc/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ggerganov.ggwave-objc";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ggwave-objc",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ggerganov.ggwave-objc.test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
