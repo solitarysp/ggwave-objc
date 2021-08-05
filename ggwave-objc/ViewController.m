@@ -29,7 +29,7 @@ void AudioOutputCallback(void * inUserData,
                          AudioQueueRef outAQ,
                          AudioQueueBufferRef outBuffer);
 
-@interface ViewController ()
+@interface ViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *labelStatusInp;
 @property (weak, nonatomic) IBOutlet UILabel *labelReceived;
@@ -106,9 +106,14 @@ void AudioOutputCallback(void * inUserData,
     stateOut.labelTimeSend = _labelTimeSend;
     stateInp.labelTimeReceive = _labelTimeReceive;
     stateOut.labeleTotalTime = _labelTotalTime;
+    _textRandomLength.delegate =self;
+    self.textFieldData.delegate=self;
 }
-
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    _textRandomLength.resignFirstResponder;
+    self.textFieldData.resignFirstResponder;
+    return  TRUE;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return [self.data count];
