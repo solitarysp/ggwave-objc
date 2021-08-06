@@ -409,7 +409,6 @@ void AudioOutputCallback(void * inUserData,
         // no audio left - stop playback
         if (stateOut->isPlaying) {
             stateOut->labeleTotalTime.text = [@"Time to send: " stringByAppendingString:[NSString stringWithFormat:@"%lld ms", (long long)([[NSDate date] timeIntervalSince1970] * 1000.0)- timerSend]];
-            stateOut->labelTimeSend.text =[@"Time send: "stringByAppendingString:([[NSString stringWithFormat:@"%lld", (long long)([[NSDate date] timeIntervalSince1970] * 1000.0)] substringFromIndex:7])];
             printf("Stopping playback\n");
             AudioQueueStop(stateOut->queue, false);
             stateOut->isPlaying = false;
